@@ -1,14 +1,15 @@
 import { useState } from "react";
 import loginBackgroundImage from "../assets/login-background.jpg";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [registered, setRegistered] = useState(false);
 
-  const registerUser = async (event) => {
+  async function handleRegisterUser(event) {
     event.preventDefault();
     try {
       await axios.post("/register", {
@@ -17,10 +18,15 @@ const RegisterPage = () => {
         password,
       });
       alert("Registration successful. Now you can log in!");
+      setRegistered(true);
     } catch {
       alert("Registration failed. Please try again later.");
     }
-  };
+  }
+
+  if (registered) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="shadow-around bg-white-blur m-auto flex w-1/2 min-w-[400px] max-w-[500px] flex-col rounded-lg p-10">
@@ -34,10 +40,10 @@ const RegisterPage = () => {
         <h1 className="mb-8 text-center text-4xl font-bold text-black">
           Register
         </h1>
-        <form onSubmit={registerUser}>
+        <form onSubmit={handleRegisterUser}>
           <input
             type="text"
-            placeholder="Your Name"
+            placeholder="your name"
             value={name}
             onChange={(event) => setName(event.target.value)}
           ></input>
@@ -48,7 +54,7 @@ const RegisterPage = () => {
             onChange={(event) => setEmail(event.target.value)}
           ></input>
           <input
-            type="text"
+            type="password"
             placeholder="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
