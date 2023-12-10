@@ -8,6 +8,7 @@ export default {
         black: "#222222",
         grey: "#717171",
         slate: "#f1f5f9",
+        "slate-dark": "#e2e8f0",
         "white-blur": "rgba(255, 255, 255, 0.96)",
       },
       boxShadow: {

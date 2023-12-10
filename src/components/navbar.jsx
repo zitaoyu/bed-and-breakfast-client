@@ -25,16 +25,16 @@ const Logo = ({ className }) => {
 const SearchBar = ({ className }) => {
   return (
     <div
-      className={`mx-6 my-auto flex h-12 justify-between whitespace-nowrap rounded-full text-black shadow-lg outline outline-1 outline-slate-300 hover:shadow-slate-300 ${className}`}
+      className={`outline-slate-300 hover:shadow-slate-300 mx-6 my-auto flex h-12 justify-between whitespace-nowrap rounded-full text-black shadow-lg outline outline-1 ${className}`}
     >
       <button className="px-4">
         <div className="my-auto">Anywhere</div>
       </button>
-      <div className="my-2 w-[1px] bg-slate-400"></div>
+      <div className="bg-slate-400 my-2 w-[1px]"></div>
       <button className="px-4">
         <div className="my-auto">Any week</div>
       </button>
-      <div className="my-2 w-[1px] bg-slate-400"></div>
+      <div className="bg-slate-400 my-2 w-[1px]"></div>
       <button className="px-4">
         <div className="my-auto text-grey">Add guests</div>
       </button>
@@ -66,14 +66,14 @@ const ProfileBar = ({ className }) => {
     <div
       className={`my-auto flex h-12 gap-1 whitespace-nowrap rounded-full text-black ${className}`}
     >
-      <button className="hover:bg-slate hidden h-full rounded-full px-4 lg:block">
+      <button className="hidden h-full rounded-full px-4 hover:bg-slate lg:block">
         List your home
       </button>
-      <button className="hover:bg-slate hidden h-full rounded-full px-4 lg:block">
+      <button className="hidden h-full rounded-full px-4 hover:bg-slate lg:block">
         <FontAwesomeIcon className="m-auto" icon={faEarthAmericas} />
       </button>
       <button
-        className={`relative flex h-full rounded-full  p-2 shadow-slate-300 outline outline-1 outline-slate-300  ${
+        className={`shadow-slate-300 outline-slate-300 relative flex  h-full rounded-full p-2 outline outline-1  ${
           showMenu ? "bg-white shadow-md" : "hover:shadow-md"
         }`}
         onClick={() => setShowMenu(!showMenu)}
