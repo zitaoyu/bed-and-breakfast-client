@@ -4,9 +4,7 @@ import ProfilePageContainer from "../components/ProfilePageContainer";
 const NewPlacePage = () => {
   return (
     <ProfilePageContainer>
-      <div className="flex max-w-3xl flex-col">
-        <NewPlaceForm />
-      </div>
+      <NewPlaceForm />
     </ProfilePageContainer>
   );
 };

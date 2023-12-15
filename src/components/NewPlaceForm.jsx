@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,6 +9,8 @@ import {
   faTv,
   faUtensils,
   faWifi,
+  faTrashCan,
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
@@ -24,7 +26,12 @@ const FormInput = ({
     <div>
       <h2 className="text-2xl font-semibold text-black">{title}</h2>
       {isTextarea ? (
-        <textarea className="h-40" />
+        <textarea
+          className="h-40"
+          placeholder={placeholder}
+          value={state}
+          onChange={(ev) => stateSetter(ev.target.value)}
+        />
       ) : (
         <input
           type={inputType}
@@ -46,7 +53,6 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
       const response = await axios.post("/upload-by-link", {
         url: photoLink,
       });
-      // setPhotoLink("");
       if (response.data.filename) {
         setAddedPhotos([
           ...addedPhotos,
@@ -85,8 +91,19 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
       });
   }
 
+  function removePhoto(ev, photoLink) {
+    ev.preventDefault();
+    setAddedPhotos(addedPhotos.filter((link) => link !== photoLink));
+  }
+
+  function setPrimaryPhoto(ev, photoLink) {
+    ev.preventDefault();
+    const otherPhotos = addedPhotos.filter((link) => link !== photoLink);
+    setAddedPhotos([photoLink, ...otherPhotos]);
+  }
+
   return (
-    <div>
+    <div className="text-black">
       <div className="flex gap-2">
         <input
           type="url"
@@ -101,17 +118,34 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
           Add photo
         </button>
       </div>
-      <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-4">
+      <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
         {/* Uploaded Photos */}
         {addedPhotos.length > 0 &&
-          addedPhotos.map((photoLink, index) => (
-            <img
-              key={index}
-              src={photoLink}
-              className="h-32 w-full rounded-2xl object-cover"
-            ></img>
+          addedPhotos.map((photoLink) => (
+            <div key={photoLink} className="relative flex h-40">
+              <img
+                src={photoLink}
+                className="w-full rounded-2xl object-cover"
+              ></img>
+              <div className="absolute bottom-1 right-1 flex gap-2">
+                <button
+                  onClick={(ev) => setPrimaryPhoto(ev, photoLink)}
+                  className={`${
+                    photoLink === addedPhotos[0] && "text-yellow-500 opacity-80"
+                  } cursor-pointer rounded-xl bg-slate px-3 py-2 text-lg text-black opacity-50 hover:opacity-80`}
+                >
+                  <FontAwesomeIcon icon={faStar} />
+                </button>
+                <button
+                  onClick={(ev) => removePhoto(ev, photoLink)}
+                  className="cursor-pointer rounded-xl bg-slate px-3 py-2 text-lg text-black opacity-50 hover:opacity-80"
+                >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              </div>
+            </div>
           ))}
-        <label className="flex h-32 cursor-pointer items-center justify-center rounded-2xl border text-center text-xl hover:bg-slate">
+        <label className="flex h-40 cursor-pointer items-center justify-center rounded-2xl border text-center text-xl hover:bg-slate">
           <input
             type="file"
             multiple
@@ -126,6 +160,7 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
 };
 
 const NewPlaceForm = () => {
+  const { id } = useParams();
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [addedPhotos, setAddedPhotos] = useState([]);
@@ -135,6 +170,7 @@ const NewPlaceForm = () => {
   const [checkIn, setCheckIn] = useState("After 4:00 PM");
   const [checkOut, setCheckOut] = useState("Before 11:00 AM");
   const [maxGuests, setMaxGuests] = useState(0);
+  const [price, setPrice] = useState(100);
   const [redirectToListing, setRedirectToListing] = useState(false);
 
   const checkboxes = [
@@ -145,6 +181,29 @@ const NewPlaceForm = () => {
     { id: 5, icon: faSnowflake, label: "Air conditioning" },
     { id: 6, icon: faBath, label: "Bathtub" },
   ];
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`/places/${id}`)
+        .then((response) => {
+          const { data } = response;
+          setTitle(data.title);
+          setAddress(data.address);
+          setAddedPhotos(data.photos);
+          setDescription(data.description);
+          setPerks(data.perks);
+          setExtraInfo(data.extraInfo);
+          setCheckIn(data.checkIn);
+          setCheckOut(data.checkOut);
+          setMaxGuests(data.maxGuests);
+          setPrice(data.price);
+        })
+        .catch(() => {
+          alert("Cannot fetch place data, redirecting...");
+        });
+    }
+  }, []);
 
   function handlePerksCheckBoxChange(ev) {
     const { name, checked } = ev.target;
@@ -157,7 +216,7 @@ const NewPlaceForm = () => {
     });
   }
 
-  async function handleAddNewPlace(ev) {
+  async function handleSavePlace(ev) {
     ev.preventDefault();
     const placeData = {
       title,
@@ -169,8 +228,27 @@ const NewPlaceForm = () => {
       checkIn,
       checkOut,
       maxGuests,
+      price,
     };
-    await axios.post("/place", placeData);
+    if (id) {
+      // update place
+      await axios.put("/user-places", { id, ...placeData });
+    } else {
+      // create new place
+      await axios.post("/user-places", placeData);
+    }
+    setRedirectToListing(true);
+  }
+
+  async function removeListing(ev) {
+    ev.preventDefault();
+    // delete place
+    await axios.delete("/user-places", { data: { id } });
+    setRedirectToListing(true);
+  }
+
+  function cancelEditing(ev) {
+    ev.preventDefault();
     setRedirectToListing(true);
   }
 
@@ -179,7 +257,7 @@ const NewPlaceForm = () => {
   }
 
   return (
-    <form className="mt-6 flex flex-col gap-4" onSubmit={handleAddNewPlace}>
+    <form className="my-6 flex flex-col gap-4" onSubmit={handleSavePlace}>
       {/* Title */}
       <FormInput
         title="Title:"
@@ -215,7 +293,7 @@ const NewPlaceForm = () => {
 
       {/* Perks */}
       <h2 className="text-2xl font-semibold text-black">Amenities:</h2>
-      <div className="grid grid-cols-2 gap-1 text-lg text-black lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-1 text-lg text-black sm:grid-cols-2 lg:grid-cols-3">
         {checkboxes.map((checkbox) => (
           <label
             key={checkbox.id}
@@ -225,9 +303,10 @@ const NewPlaceForm = () => {
           >
             <input
               type="checkbox"
+              checked={perks.includes(checkbox.label)}
               name={checkbox.label}
               className="mr-2"
-              onClick={(ev) => handlePerksCheckBoxChange(ev)}
+              onChange={(ev) => handlePerksCheckBoxChange(ev)}
             />
             {checkbox.icon && (
               <FontAwesomeIcon className="text-2xl" icon={checkbox.icon} />
@@ -267,9 +346,31 @@ const NewPlaceForm = () => {
         state={maxGuests}
         stateSetter={setMaxGuests}
       />
-      <button className="my-4 w-full rounded-xl bg-primary px-6 py-2 text-center text-white">
+      {/* Price Per Night */}
+      <FormInput
+        title="Price per night:"
+        placeholder="100"
+        inputType="number"
+        state={price}
+        stateSetter={setPrice}
+      />
+      <button className="w-full rounded-xl bg-primary px-6 py-2 text-center text-white">
         Save
       </button>
+      <button
+        onClick={(ev) => cancelEditing(ev)}
+        className="w-full rounded-xl bg-slate-dark px-6 py-2 text-center text-black"
+      >
+        Cancel
+      </button>
+      {id && (
+        <button
+          onClick={(ev) => removeListing(ev)}
+          className="w-full rounded-xl bg-grey px-6 py-2 text-center text-white"
+        >
+          Delete
+        </button>
+      )}
     </form>
   );
 };

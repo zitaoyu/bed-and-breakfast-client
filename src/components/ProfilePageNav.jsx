@@ -28,12 +28,12 @@ const ProfilePageNavBar = () => {
   }
 
   return (
-    <div>
+    <div className="">
       <h1 className="text-3xl font-semibold text-black">Account</h1>
       <span>
         {userInfo.name}, {userInfo.email}
       </span>
-      <nav className="flex h-14 justify-around gap-6 whitespace-nowrap md:gap-12">
+      <nav className="flex grow flex-col gap-0 whitespace-nowrap sm:h-auto sm:flex-row sm:justify-around sm:gap-6 md:gap-12">
         <Link to={"/account/"} className={getLinkClasses("profile")}>
           <FontAwesomeIcon className="mr-2 text-xl" icon={faIdCard} />
           My Profile

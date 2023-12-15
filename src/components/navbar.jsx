@@ -66,12 +66,16 @@ const ProfileBar = ({ className }) => {
     <div
       className={`my-auto flex h-12 gap-1 whitespace-nowrap rounded-full text-black ${className}`}
     >
-      <button className="hidden h-full rounded-full px-4 hover:bg-slate lg:block">
-        List your home
-      </button>
-      <button className="hidden h-full rounded-full px-4 hover:bg-slate lg:block">
-        <FontAwesomeIcon className="m-auto" icon={faEarthAmericas} />
-      </button>
+      <Link to={"/account/listings"}>
+        <button className="hidden h-full rounded-full px-4 hover:bg-slate lg:block">
+          List your home
+        </button>
+      </Link>
+      <Link to={"account/bookings"}>
+        <button className="hidden h-full rounded-full px-4 hover:bg-slate lg:block">
+          <FontAwesomeIcon className="m-auto" icon={faEarthAmericas} />
+        </button>
+      </Link>
       <button
         className={`shadow-slate-300 outline-slate-300 relative flex  h-full rounded-full p-2 outline outline-1  ${
           showMenu ? "bg-white shadow-md" : "hover:shadow-md"
@@ -123,11 +127,14 @@ const NavBar = () => {
   const isIndexPage = location.pathname === "/";
 
   return (
-    <header className="grid h-20 grid-flow-col justify-items-stretch">
-      <Logo className="justify-self-start" />
-      {isIndexPage && <SearchBar className="mx-auto justify-self-stretch" />}
-      <ProfileBar className="justify-self-end" />
-    </header>
+    <div>
+      <header className="grid h-20 grid-flow-col justify-items-stretch">
+        <Logo className="justify-self-start" />
+        {isIndexPage && <SearchBar className="mx-auto justify-self-stretch" />}
+        <ProfileBar className="justify-self-end" />
+      </header>
+      <div className="absolute left-0 h-[1px] w-screen bg-[#ebebeb]"></div>
+    </div>
   );
 };
 

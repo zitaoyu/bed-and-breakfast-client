@@ -16,7 +16,7 @@ const ProfilePageContainer = ({ children }) => {
     return <Navigate to={"/login"} />;
   }
   return (
-    <div className="mx-auto flex w-full min-w-fit max-w-3xl flex-col gap-4">
+    <div className="mx-auto mt-2 flex w-full flex-col gap-4 lg:w-3/4">
       <ProfilePageNavBar />
       {children}
     </div>
