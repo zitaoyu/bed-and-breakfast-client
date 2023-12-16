@@ -42,21 +42,22 @@ const PlacePhotoGallery = ({ photos }) => {
   }
 
   return (
-    <div className="relative pt-6">
+    <div className="relative pt-2">
       <div className="grid grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-2xl">
         {[...Array(5).keys()].map((index) => {
           if (photos?.[index]) {
             return (
               <div
                 key={index}
-                className={`${index === 0 && "col-span-2 row-span-2"}`}
+                className={`${
+                  index === 0 && "col-span-2 row-span-2"
+                } cursor-pointer hover:brightness-75`}
+                onClick={() => setShowAllPhotos(true)}
               >
-                {photos?.[index] && (
-                  <img
-                    className="aspect-square object-cover"
-                    src={photos[index]}
-                  />
-                )}
+                <img
+                  className="aspect-square object-cover"
+                  src={photos[index]}
+                />
               </div>
             );
           } else {
@@ -71,7 +72,7 @@ const PlacePhotoGallery = ({ photos }) => {
       </div>
       <button
         onClick={() => setShowAllPhotos(true)}
-        className="absolute bottom-2 right-2 rounded-md bg-white px-2 py-1 text-black opacity-80 outline outline-1 outline-black hover:opacity-100"
+        className="absolute bottom-3 right-3 rounded-md bg-white px-2 py-1 text-black opacity-80 outline outline-1 outline-black hover:opacity-100"
       >
         <FontAwesomeIcon className="mr-1" icon={faImages} />
         Show all photos

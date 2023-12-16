@@ -2,17 +2,12 @@ import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBath,
-  faCar,
   faCloudArrowUp,
-  faSnowflake,
-  faTv,
-  faUtensils,
-  faWifi,
   faTrashCan,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import ALL_PERKS from "../util/perks";
 
 const FormInput = ({
   title,
@@ -173,15 +168,6 @@ const NewPlaceForm = () => {
   const [price, setPrice] = useState(100);
   const [redirectToListing, setRedirectToListing] = useState(false);
 
-  const checkboxes = [
-    { id: 1, icon: faWifi, label: "Wifi" },
-    { id: 2, icon: faCar, label: "Free parking" },
-    { id: 3, icon: faTv, label: "TV" },
-    { id: 4, icon: faUtensils, label: "Kitchen" },
-    { id: 5, icon: faSnowflake, label: "Air conditioning" },
-    { id: 6, icon: faBath, label: "Bathtub" },
-  ];
-
   useEffect(() => {
     if (id) {
       axios
@@ -294,24 +280,24 @@ const NewPlaceForm = () => {
       {/* Perks */}
       <h2 className="text-2xl font-semibold text-black">Amenities:</h2>
       <div className="grid grid-cols-1 gap-1 text-lg text-black sm:grid-cols-2 lg:grid-cols-3">
-        {checkboxes.map((checkbox) => (
+        {ALL_PERKS.map((perk, index) => (
           <label
-            key={checkbox.id}
+            key={index}
             className={`flex cursor-pointer items-center gap-2 rounded-xl border p-4 accent-primary ${
-              perks.includes(checkbox.label) && "bg-slate"
+              perks.includes(perk.label) && "bg-slate"
             }`}
           >
             <input
               type="checkbox"
-              checked={perks.includes(checkbox.label)}
-              name={checkbox.label}
+              checked={perks.includes(perk.label)}
+              name={perk.label}
               className="mr-2"
               onChange={(ev) => handlePerksCheckBoxChange(ev)}
             />
-            {checkbox.icon && (
-              <FontAwesomeIcon className="text-2xl" icon={checkbox.icon} />
+            {perk.icon && (
+              <FontAwesomeIcon className="text-2xl" icon={perk.icon} />
             )}
-            <span>{checkbox.label}</span>
+            <span>{perk.label}</span>
           </label>
         ))}
       </div>
