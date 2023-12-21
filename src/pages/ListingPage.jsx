@@ -34,6 +34,7 @@ const ListingPage = () => {
         {listedPlaces.length > 0 &&
           listedPlaces.map((place) => (
             <Link
+              key={place._id}
               to={"/account/listings/" + place._id}
               className="flex h-40 w-full cursor-pointer gap-4 rounded-2xl bg-slate p-4 shadow-md hover:bg-slate-dark"
             >
@@ -43,7 +44,7 @@ const ListingPage = () => {
                   src={place.photos?.[0]}
                 />
               </div>
-              <div className="grow-0 overflow-scroll">
+              <div className="grow-0 overflow-y-scroll">
                 <h2 className="text-base font-semibold text-black md:text-xl">
                   {place.title}
                 </h2>

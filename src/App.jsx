@@ -10,17 +10,20 @@ import BookingPage from "./pages/BookingPage";
 import ListingPage from "./pages/ListingPage";
 import NewPlacePage from "./pages/NewPlacePage";
 import PlacePage from "./pages/PlacePage";
+import ScrollToTop from "./components/ScrollToTop";
+import AboutPage from "./pages/AboutPage";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
 function App() {
   return (
     <UserContextProvider>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="/place/:id" element={<PlacePage />} />
+          <Route path="/places/:id" element={<PlacePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/account" element={<ProfilePage />} />
@@ -28,6 +31,7 @@ function App() {
           <Route path="/account/listings" element={<ListingPage />} />
           <Route path="/account/listings/new" element={<NewPlacePage />} />
           <Route path="/account/listings/:id" element={<NewPlacePage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
       </Routes>
     </UserContextProvider>

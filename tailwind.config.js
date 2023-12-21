@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#ff385c",
+        primary: "#E07400",
         black: "#222222",
         grey: "#717171",
         "grey-light": "#b0b0b0",
         slate: "#f1f5f9",
         "slate-dark": "#e2e8f0",
-        "white-blur": "rgba(255, 255, 255, 0.96)",
+        "white-blur": "rgba(255, 255, 255, 0.92)",
       },
       boxShadow: {
         around: "0 3px 10px rgb(0,0,0,0.2)",

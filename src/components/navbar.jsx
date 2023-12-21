@@ -15,7 +15,7 @@ const Logo = ({ className }) => {
   return (
     <Link to={"/"} className={`my-auto flex gap-2 text-primary ${className}`}>
       <FontAwesomeIcon className="text-4xl" icon={faMugHot} />
-      <h1 className="hidden translate-y-2 text-2xl font-bold lg:block">
+      <h1 className="hidden translate-y-2 text-xl font-bold lg:block">
         bednbreakfast
       </h1>
     </Link>
@@ -27,15 +27,15 @@ const SearchBar = ({ className }) => {
     <div
       className={`outline-slate-300 hover:shadow-slate-300 mx-6 my-auto flex h-12 justify-between whitespace-nowrap rounded-full text-black shadow-lg outline outline-1 ${className}`}
     >
-      <button className="px-4">
+      <button className="px-10 sm:px-4">
         <div className="my-auto">Anywhere</div>
       </button>
-      <div className="bg-slate-400 my-2 w-[1px]"></div>
-      <button className="px-4">
+      <div className="my-2 hidden w-[1px] bg-grey sm:block"></div>
+      <button className="hidden px-4 sm:block">
         <div className="my-auto">Any week</div>
       </button>
-      <div className="bg-slate-400 my-2 w-[1px]"></div>
-      <button className="px-4">
+      <div className="my-2 hidden w-[1px] bg-grey sm:block"></div>
+      <button className="hidden px-4 sm:block">
         <div className="my-auto text-grey">Add guests</div>
       </button>
       <button className="my-auto mr-2 h-8 w-8 rounded-full bg-primary">
@@ -89,7 +89,7 @@ const ProfileBar = ({ className }) => {
           }`}
           icon={faCircleUser}
         />
-        <span className="my-auto px-2">
+        <span className="my-auto hidden px-2 md:block">
           {isUserLogin ? userInfo.name : "Guest"}
         </span>
         {/* Pop up Menu */}
@@ -125,15 +125,18 @@ const ProfileBar = ({ className }) => {
 const NavBar = () => {
   const location = useLocation();
   const isIndexPage = location.pathname === "/";
-
+  const pages = ["/login", "/register", "/about"];
+  const isLoginRegisterPage = pages.includes(location.pathname);
   return (
     <div>
-      <header className="grid h-20 grid-flow-col justify-items-stretch">
+      <header className="borderb grid h-20 grid-flow-col justify-items-stretch border-[#ebebeb]">
         <Logo className="justify-self-start" />
         {isIndexPage && <SearchBar className="mx-auto justify-self-stretch" />}
         <ProfileBar className="justify-self-end" />
       </header>
-      <div className="absolute left-0 h-[1px] w-screen bg-[#ebebeb]"></div>
+      {!isLoginRegisterPage && (
+        <div className="absolute left-0 h-[1px] w-screen bg-[#ebebeb]" />
+      )}
     </div>
   );
 };

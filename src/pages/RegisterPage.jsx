@@ -1,16 +1,21 @@
-import { useState } from "react";
-import loginBackgroundImage from "../assets/login-background.jpg";
+import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
+import ImageBackgroundPageContainer from "../components/ImageBackgroundContainer";
+import { UserContext } from "../contexts/UserContext";
 
 const RegisterPage = () => {
+  const { showAboutPage } = useContext(UserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registered, setRegistered] = useState(false);
+  const [waitingResponse, setWaitingResponse] = useState(false);
+  const [message, setMessage] = useState("");
 
   async function handleRegisterUser(event) {
     event.preventDefault();
+    setWaitingResponse(true);
     try {
       await axios.post("/register", {
         name,
@@ -19,9 +24,15 @@ const RegisterPage = () => {
       });
       alert("Registration successful. Now you can log in!");
       setRegistered(true);
-    } catch {
-      alert("Registration failed. Please try again later.");
+    } catch (error) {
+      // console.log(error);
+      setMessage(error.response.data.error);
     }
+    setWaitingResponse(false);
+  }
+
+  if (!showAboutPage) {
+    return <Navigate to="/about" />;
   }
 
   if (registered) {
@@ -29,12 +40,7 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="shadow-around bg-white-blur m-auto flex w-1/2 min-w-[400px] max-w-[500px] flex-col rounded-lg p-10">
-      {/* Background Image */}
-      <img
-        className="absolute left-0 top-0 -z-10 h-screen w-screen"
-        src={loginBackgroundImage}
-      />
+    <ImageBackgroundPageContainer>
       {/* Login Form */}
       <div className="m-auto my-8 max-w-[400px]">
         <h1 className="mb-8 text-center text-4xl font-bold text-black">
@@ -59,21 +65,22 @@ const RegisterPage = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           ></input>
+          {message !== "" && <div className="mt-4 text-black">{message}</div>}
           <button
-            className="bg-primary mt-4 w-full rounded-lg p-2 text-white"
+            className="mt-4 w-full rounded-lg bg-primary p-2 text-white"
             type="sumit"
           >
-            Create Account
+            {waitingResponse ? "Waiting..." : "Create Account"}
           </button>
         </form>
         <div className="mt-16">
           Already a member?{" "}
-          <Link to={"/login"} className="text-primary font-bold underline">
+          <Link to={"/login"} className="font-bold text-primary underline">
             Login
           </Link>
         </div>
       </div>
-    </div>
+    </ImageBackgroundPageContainer>
   );
 };
 

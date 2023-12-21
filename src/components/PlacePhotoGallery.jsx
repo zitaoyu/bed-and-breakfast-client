@@ -4,18 +4,15 @@ import {
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import ShareSaveButtons from "./ShareSaveButtons";
 
-const PlacePhotoGallery = ({ photos }) => {
-  const [showAllPhotos, setShowAllPhotos] = useState(false);
-
+const PlacePhotoGallery = ({ photos, showAllPhotos, setShowAllPhotos }) => {
   if (showAllPhotos) {
     return (
       <div className="absolute left-0 top-0 min-h-screen w-screen bg-white">
-        <div className="fixed top-0 flex w-full justify-between p-2">
+        <div className="fixed top-0 flex w-full justify-between bg-white p-2">
           <button
-            onClick={() => setShowAllPhotos(false)}
+            onClick={() => setShowAllPhotos(!showAllPhotos)}
             className="p-2 text-2xl text-black"
           >
             <FontAwesomeIcon icon={faArrowAltCircleLeft} />
@@ -29,6 +26,7 @@ const PlacePhotoGallery = ({ photos }) => {
             }
             return (
               <img
+                key={index}
                 className={`${
                   index % 3 === 0 && "col-span-2 row-span-2"
                 } aspect-video object-cover`}
@@ -52,7 +50,7 @@ const PlacePhotoGallery = ({ photos }) => {
                 className={`${
                   index === 0 && "col-span-2 row-span-2"
                 } cursor-pointer hover:brightness-75`}
-                onClick={() => setShowAllPhotos(true)}
+                onClick={() => setShowAllPhotos(!showAllPhotos)}
               >
                 <img
                   className="aspect-square object-cover"
@@ -71,7 +69,7 @@ const PlacePhotoGallery = ({ photos }) => {
         })}
       </div>
       <button
-        onClick={() => setShowAllPhotos(true)}
+        onClick={() => setShowAllPhotos(!showAllPhotos)}
         className="absolute bottom-3 right-3 rounded-md bg-white px-2 py-1 text-black opacity-80 outline outline-1 outline-black hover:opacity-100"
       >
         <FontAwesomeIcon className="mr-1" icon={faImages} />

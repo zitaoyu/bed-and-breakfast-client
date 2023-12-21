@@ -48,15 +48,12 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
       const response = await axios.post("/upload-by-link", {
         url: photoLink,
       });
-      if (response.data.filename) {
-        setAddedPhotos([
-          ...addedPhotos,
-          "http://localhost:4000/uploads/" + response.data.filename,
-        ]);
+      if (response.data.url) {
+        setAddedPhotos([...addedPhotos, response.data.url]);
       }
       setPhotoLink("");
     } catch (error) {
-      alert("Upload failed, please try again!");
+      console.log(error);
     }
   }
 
@@ -74,11 +71,9 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
-        const filenames = response.data.filenames;
-        if (filenames && filenames.length > 0) {
-          for (let i = 0; i < filenames.length; i++)
-            [(filenames[i] = "http://localhost:4000/uploads/" + filenames[i])];
-          setAddedPhotos([...addedPhotos, ...filenames]);
+        const { urls } = response.data;
+        if (urls && urls.length > 0) {
+          setAddedPhotos([...addedPhotos, ...urls]);
         }
       })
       .catch(() => {

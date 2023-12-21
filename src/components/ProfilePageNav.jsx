@@ -9,7 +9,7 @@ import {
 import { UserContext } from "../contexts/UserContext";
 
 const ProfilePageNavBar = () => {
-  const { ready, userInfo } = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
 
   const { pathname } = useLocation();
   let subpage = pathname.split("/")?.[2];
