@@ -49,7 +49,7 @@ const PlacePage = () => {
             className="text-black underline"
             target="_blank"
             rel="noreferrer"
-            href={"https://maps.google.com/?q=" + place?.adddress}
+            href={"https://maps.google.com/?q=" + place?.address}
           >
             <FontAwesomeIcon className="m-auto mr-2" icon={faLocationDot} />
             {place?.address}
