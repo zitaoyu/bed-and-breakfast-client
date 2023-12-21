@@ -36,7 +36,7 @@ const PlacePage = () => {
     <div
       className={`${
         // prevent overflowing overlay
-        showAllPhotos && "h-[80vh] overflow-hidden"
+        showAllPhotos && "h-[0vh] overflow-hidden"
       } mx-auto  w-full max-w-7xl  px-2 text-sm text-black sm:text-base lg:px-10`}
     >
       {/* Title */}

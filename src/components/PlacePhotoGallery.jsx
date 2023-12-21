@@ -24,12 +24,15 @@ const PlacePhotoGallery = ({ photos, showAllPhotos, setShowAllPhotos }) => {
             if (!link) {
               return;
             }
+            const isLargePhoto =
+              index % 3 === 0 ||
+              (index === photos.length - 1 && index % 3 === 1);
             return (
               <img
                 key={index}
                 className={`${
-                  index % 3 === 0 && "col-span-2 row-span-2"
-                } aspect-video object-cover`}
+                  isLargePhoto && "col-span-2 row-span-2"
+                } aspect-video w-full object-cover`}
                 src={link}
               />
             );

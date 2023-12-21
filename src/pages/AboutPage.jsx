@@ -14,7 +14,7 @@ const AboutPage = () => {
     }
   }, []);
 
-  const message = `This is a fully functional booking site inspired by Airbnb. 
+  const message = `This is a demo project, a fully functional booking site inspired by Airbnb. 
                     You can register as a user, view places, list your place, 
                     book accommodations, and more.`;
 
