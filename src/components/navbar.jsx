@@ -131,7 +131,7 @@ const NavBar = () => {
     <div>
       <header className="borderb grid h-20 grid-flow-col justify-items-stretch border-[#ebebeb]">
         <Logo className="justify-self-start" />
-        {isIndexPage && <SearchBar className="mx-auto justify-self-stretch" />}
+        {/* {isIndexPage && <SearchBar className="mx-auto justify-self-stretch" />} */}
         <ProfileBar className="justify-self-end" />
       </header>
       {!isLoginRegisterPage && (

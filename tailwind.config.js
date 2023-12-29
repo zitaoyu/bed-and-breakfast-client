@@ -15,6 +15,15 @@ export default {
       boxShadow: {
         around: "0 3px 10px rgb(0,0,0,0.2)",
       },
+      animation: {
+        "image-fade-in": "fadein 0.3s linear",
+      },
+      keyframes: {
+        fadein: {
+          from: { opacity: 0.8 },
+          to: { opacity: 1 },
+        },
+      },
     },
   },
   plugins: [],

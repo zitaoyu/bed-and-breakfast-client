@@ -53,7 +53,7 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
       }
       setPhotoLink("");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

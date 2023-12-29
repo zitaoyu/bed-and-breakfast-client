@@ -26,7 +26,7 @@ const ProfilePage = () => {
           password,
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     setEditMode(!editMode);
