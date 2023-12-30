@@ -1,23 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMugHot,
-  faMagnifyingGlass,
-  faEarthAmericas,
-  faBars,
-  faCircleUser,
-} from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
+import { Icon } from "./Icon";
+import { ICONS } from "../util/icons";
 
 const Logo = ({ className }) => {
   return (
     <Link to={"/"} className={`my-auto flex gap-2 text-primary ${className}`}>
-      <FontAwesomeIcon className="text-4xl" icon={faMugHot} />
-      <h1 className="hidden translate-y-2 text-xl font-bold lg:block">
-        bednbreakfast
-      </h1>
+      <Icon className="text-4xl" icon={ICONS.LOGO} />
+      <h1 className="translate-y-2 text-xl font-bold">bednbreakfast</h1>
     </Link>
   );
 };
@@ -39,10 +31,7 @@ const SearchBar = ({ className }) => {
         <div className="my-auto text-grey">Add guests</div>
       </button>
       <button className="my-auto mr-2 h-8 w-8 rounded-full bg-primary">
-        <FontAwesomeIcon
-          className="m-auto text-white"
-          icon={faMagnifyingGlass}
-        />
+        <Icon className="m-auto text-white" icon={ICONS.EARTH} />
       </button>
     </div>
   );
@@ -73,7 +62,7 @@ const ProfileBar = ({ className }) => {
       </Link>
       <Link to={"account/bookings"}>
         <button className="hidden h-full rounded-full px-4 hover:bg-slate lg:block">
-          <FontAwesomeIcon className="m-auto" icon={faEarthAmericas} />
+          <Icon className="m-auto" icon={ICONS.EARTH} />
         </button>
       </Link>
       <button
@@ -82,12 +71,12 @@ const ProfileBar = ({ className }) => {
         }`}
         onClick={() => setShowMenu(!showMenu)}
       >
-        <FontAwesomeIcon className="my-auto ml-2 mr-4" icon={faBars} />
-        <FontAwesomeIcon
+        <Icon className="my-auto ml-2 mr-4" icon={ICONS.BARS} />
+        <Icon
           className={`m-auto h-8 w-8 ${
             isUserLogin ? "text-primary" : "text-grey"
           }`}
-          icon={faCircleUser}
+          icon={ICONS.USER}
         />
         <span className="my-auto hidden px-2 md:block">
           {isUserLogin ? userInfo.name : "Guest"}
@@ -131,7 +120,7 @@ const NavBar = () => {
     <div>
       <header className="borderb grid h-20 grid-flow-col justify-items-stretch border-[#ebebeb]">
         <Logo className="justify-self-start" />
-        {isIndexPage && <SearchBar className="mx-auto justify-self-stretch" />}
+        {/* {isIndexPage && <SearchBar className="mx-auto justify-self-stretch" />} */}
         <ProfileBar className="justify-self-end" />
       </header>
       {!isLoginRegisterPage && (

@@ -1,19 +1,12 @@
-import {
-  faBath,
-  faCar,
-  faSnowflake,
-  faTv,
-  faUtensils,
-  faWifi,
-} from "@fortawesome/free-solid-svg-icons";
+import { ICONS } from "./icons";
 
 const ALL_PERKS = [
-  { icon: faWifi, label: "Wifi" },
-  { icon: faCar, label: "Free parking" },
-  { icon: faTv, label: "TV" },
-  { icon: faUtensils, label: "Kitchen" },
-  { icon: faSnowflake, label: "Air conditioning" },
-  { icon: faBath, label: "Bathtub" },
+  { icon: ICONS.WIFI, label: "Wifi" },
+  { icon: ICONS.CAR, label: "Free parking" },
+  { icon: ICONS.TV, label: "TV" },
+  { icon: ICONS.UTENSILS, label: "Kitchen" },
+  { icon: ICONS.SNOWFLAKE, label: "Air conditioning" },
+  { icon: ICONS.BATH, label: "Bathtub" },
 ];
 
 export default ALL_PERKS;

@@ -1,12 +1,8 @@
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHouseFlag,
-  faHouseLock,
-  faIdCard,
-} from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../contexts/UserContext";
+import { Icon } from "./Icon";
+import { ICONS } from "../util/icons";
 
 const ProfilePageNavBar = () => {
   const { userInfo } = useContext(UserContext);
@@ -35,15 +31,15 @@ const ProfilePageNavBar = () => {
       </span>
       <nav className="flex grow flex-col gap-0 whitespace-nowrap sm:h-auto sm:flex-row sm:justify-around sm:gap-6 md:gap-12">
         <Link to={"/account/"} className={getLinkClasses("profile")}>
-          <FontAwesomeIcon className="mr-2 text-xl" icon={faIdCard} />
+          <Icon className="mr-2 text-xl" icon={ICONS.PROFILE} />
           My Profile
         </Link>
         <Link to={"/account/bookings"} className={getLinkClasses("bookings")}>
-          <FontAwesomeIcon className="mr-2 text-xl" icon={faHouseFlag} />
+          <Icon className="mr-2 text-xl" icon={ICONS.BOOKINGS} />
           Bookings
         </Link>
         <Link to={"/account/listings"} className={getLinkClasses("listings")}>
-          <FontAwesomeIcon className="mr-2 text-xl" icon={faHouseLock} />
+          <Icon className="mr-2 text-xl" icon={ICONS.ACCOMMODATIONS} />
           Accommodations
         </Link>
       </nav>

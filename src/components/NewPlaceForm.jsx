@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCloudArrowUp,
-  faTrashCan,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import ALL_PERKS from "../util/perks";
+import { Icon } from "./Icon";
+import { ICONS } from "../util/icons";
 
 const FormInput = ({
   title,
@@ -53,7 +49,7 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
       }
       setPhotoLink("");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -124,13 +120,13 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
                     photoLink === addedPhotos[0] && "text-yellow-500 opacity-80"
                   } cursor-pointer rounded-xl bg-slate px-3 py-2 text-lg text-black opacity-50 hover:opacity-80`}
                 >
-                  <FontAwesomeIcon icon={faStar} />
+                  <Icon icon={ICONS.STAR} />
                 </button>
                 <button
                   onClick={(ev) => removePhoto(ev, photoLink)}
                   className="cursor-pointer rounded-xl bg-slate px-3 py-2 text-lg text-black opacity-50 hover:opacity-80"
                 >
-                  <FontAwesomeIcon icon={faTrashCan} />
+                  <Icon icon={ICONS.DELETE} />
                 </button>
               </div>
             </div>
@@ -142,7 +138,7 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
             className="hidden"
             onChange={handlePhotoUpload}
           />
-          <FontAwesomeIcon icon={faCloudArrowUp} /> Upload
+          <Icon icon={ICONS.UPLOAD} /> Upload
         </label>
       </div>
     </div>
@@ -289,9 +285,7 @@ const NewPlaceForm = () => {
               className="mr-2"
               onChange={(ev) => handlePerksCheckBoxChange(ev)}
             />
-            {perk.icon && (
-              <FontAwesomeIcon className="text-2xl" icon={perk.icon} />
-            )}
+            {perk.icon && <Icon className="text-2xl" icon={perk.icon} />}
             <span>{perk.label}</span>
           </label>
         ))}

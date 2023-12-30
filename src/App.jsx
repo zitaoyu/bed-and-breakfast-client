@@ -12,6 +12,7 @@ import NewPlacePage from "./pages/NewPlacePage";
 import PlacePage from "./pages/PlacePage";
 import ScrollToTop from "./components/ScrollToTop";
 import AboutPage from "./pages/AboutPage";
+import "react-loading-skeleton/dist/skeleton.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
