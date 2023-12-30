@@ -9,6 +9,7 @@ import SectionDivider from "../components/SectionDivider";
 import { Icon } from "../components/Icon";
 import { ICONS } from "../util/icons";
 import Skeleton from "react-loading-skeleton";
+import ImageSlider from "../components/ImageSlider";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -64,11 +65,16 @@ const PlacePage = () => {
         )}
       </div>
       {/* Photo Gallery */}
-      <PlacePhotoGallery
-        photos={place ? place.photos : undefined}
-        showAllPhotos={showAllPhotos}
-        setShowAllPhotos={setShowAllPhotos}
-      />
+      <div className="block sm:hidden">
+        <ImageSlider photos={place ? place.photos : undefined} />
+      </div>
+      <div className="hidden sm:block">
+        <PlacePhotoGallery
+          photos={place ? place.photos : undefined}
+          showAllPhotos={showAllPhotos}
+          setShowAllPhotos={setShowAllPhotos}
+        />
+      </div>
 
       {/* Description and Book form*/}
       <div className="my-6 grid grid-cols-1 gap-8 lg:grid-cols-[2fr_1fr]">
