@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
 import ProfilePageContainer from "../components/ProfilePageContainer";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Icon } from "../components/Icon";
+import { ICONS } from "../util/icons";
 
 const ListingPage = () => {
   const [listedPlaces, setListedPlaces] = useState([]);
@@ -26,7 +25,7 @@ const ListingPage = () => {
         to={"/account/listings/new"}
         className="inline-block w-full rounded-xl bg-slate px-6 py-2 text-center text-black hover:bg-slate-dark"
       >
-        <FontAwesomeIcon className="mr-2 text-xl" icon={faPlus} />
+        <Icon className="mr-2 text-xl" icon={ICONS.ADD} />
         Add New Accommodation
       </Link>
 

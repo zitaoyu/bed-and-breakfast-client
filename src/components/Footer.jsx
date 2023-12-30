@@ -1,10 +1,7 @@
-import {
-  faDollarSign,
-  faEarthAmericas,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import SectionDivider from "./SectionDivider";
+import { Icon } from "./Icon";
+import { ICONS } from "../util/icons";
 
 const Footer = () => {
   const tables = [
@@ -45,11 +42,11 @@ const Footer = () => {
       <div className="mt-6 grid w-full grid-cols-1 gap-2 font-medium md:justify-items-center">
         <div className="flex gap-6">
           <button className="hover:underline">
-            <FontAwesomeIcon className="mr-1" icon={faEarthAmericas} />
+            <Icon className="mr-1" icon={ICONS.EARTH} />
             English (US)
           </button>
           <button className="hover:underline">
-            <FontAwesomeIcon className="mr-1" icon={faDollarSign} />
+            <Icon className="mr-1" icon={ICONS.DOLLAR} />
             USD
           </button>
         </div>

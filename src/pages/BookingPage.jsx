@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import ProfilePageContainer from "../components/ProfilePageContainer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
+import { Icon } from "../components/Icon";
+import { ICONS } from "../util/icons";
 
 const MyBookingWidget = ({ booking, placeId }) => {
   const [place, setPlace] = useState(null);
@@ -43,14 +43,14 @@ const MyBookingWidget = ({ booking, placeId }) => {
             <div className="flex">
               <span className="sm:w-32">Check in date: </span>
               <span className="font-semibold">
-                <FontAwesomeIcon icon={faCalendar} className="mr-1" />
+                <Icon icon={ICONS.DATE} className="mr-1" />
                 {booking.checkInDate.split("T")[0]}
               </span>
             </div>
             <div className="flex">
               <span className="sm:w-32">Check out date:</span>
               <span className="font-semibold">
-                <FontAwesomeIcon icon={faCalendar} className="mr-1" />
+                <Icon icon={ICONS.DATE} className="mr-1" />
                 {booking.checkOutDate.split("T")[0]}
               </span>
             </div>
@@ -121,9 +121,9 @@ const BookingPage = () => {
                   onClick={() => cancelBooking(booking)}
                   className="absolute -right-2 -top-2 z-10 text-3xl text-red-500"
                 >
-                  <FontAwesomeIcon
-                    icon={faXmarkCircle}
-                    className="rounded-full bg-white"
+                  <Icon
+                    icon={ICONS.DELETE}
+                    className="rounded-full border bg-white p-2"
                   />
                 </button>
               )}

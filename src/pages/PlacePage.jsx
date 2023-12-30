@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import PlacePhotoGallery from "../components/PlacePhotoGallery";
 import ShareSaveButtons from "../components/ShareSaveButtons";
 import ALL_PERKS from "../util/perks";
 import BookingFormWidget from "../components/BookingFormWidget";
 import SectionDivider from "../components/SectionDivider";
+import { Icon } from "../components/Icon";
+import { ICONS } from "../util/icons";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -51,7 +50,7 @@ const PlacePage = () => {
             rel="noreferrer"
             href={"https://maps.google.com/?q=" + place?.address}
           >
-            <FontAwesomeIcon className="m-auto mr-2" icon={faLocationDot} />
+            <Icon className="m-auto mr-2" icon={ICONS.LOCATION} />
             {place?.address}
           </a>
           <ShareSaveButtons />
@@ -77,10 +76,7 @@ const PlacePage = () => {
               if (foundPerk) {
                 return (
                   <div key={label} className="my-2">
-                    <FontAwesomeIcon
-                      icon={foundPerk.icon}
-                      className="mr-6 h-6 w-6"
-                    />
+                    <Icon icon={foundPerk.icon} className="mr-6 h-6 w-6" />
                     {label}
                   </div>
                 );

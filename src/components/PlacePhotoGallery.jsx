@@ -1,10 +1,6 @@
-import {
-  faImage,
-  faImages,
-  faArrowAltCircleLeft,
-} from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ShareSaveButtons from "./ShareSaveButtons";
+import { Icon } from "./Icon";
+import { ICONS } from "../util/icons";
 
 const PlacePhotoGallery = ({ photos, showAllPhotos, setShowAllPhotos }) => {
   if (showAllPhotos) {
@@ -15,7 +11,7 @@ const PlacePhotoGallery = ({ photos, showAllPhotos, setShowAllPhotos }) => {
             onClick={() => setShowAllPhotos(!showAllPhotos)}
             className="p-2 text-2xl text-black"
           >
-            <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+            <Icon icon={ICONS.EXIT} />
           </button>
           <ShareSaveButtons />
         </div>
@@ -65,7 +61,7 @@ const PlacePhotoGallery = ({ photos, showAllPhotos, setShowAllPhotos }) => {
             // not enough photos, use unknow image icon
             return (
               <div key={index} className="flex justify-center bg-slate">
-                <FontAwesomeIcon className="my-auto text-3xl" icon={faImage} />
+                <Icon className="my-auto text-3xl" icon={ICONS.IMAGE} />
               </div>
             );
           }
@@ -75,7 +71,7 @@ const PlacePhotoGallery = ({ photos, showAllPhotos, setShowAllPhotos }) => {
         onClick={() => setShowAllPhotos(!showAllPhotos)}
         className="absolute bottom-3 right-3 rounded-md bg-white px-2 py-1 text-black opacity-80 outline outline-1 outline-black hover:opacity-100"
       >
-        <FontAwesomeIcon className="mr-1" icon={faImages} />
+        <Icon className="mr-1" icon={ICONS.IMAGES} />
         Show all photos
       </button>
     </div>

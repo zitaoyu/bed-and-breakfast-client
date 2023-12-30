@@ -1,12 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { PacmanLoader } from "react-spinners";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Icon } from "../components/Icon";
+import { ICONS } from "../util/icons";
 
 const ImageSlider = ({ photos }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -33,8 +30,8 @@ const ImageSlider = ({ photos }) => {
         className="absolute top-1/2 ml-1 hidden -translate-y-1/2 opacity-70 hover:opacity-100 group-hover:block"
         onClick={(e) => updatePhotoIndex(e, -1)}
       >
-        <FontAwesomeIcon
-          icon={faChevronLeft}
+        <Icon
+          icon={ICONS.LEFT_ARROW}
           className="h-4 w-4 rounded-full bg-white p-2"
         />
       </button>
@@ -42,8 +39,8 @@ const ImageSlider = ({ photos }) => {
         className="absolute right-0 top-1/2 mr-1 hidden -translate-y-1/2 opacity-70 hover:opacity-100 group-hover:block"
         onClick={(e) => updatePhotoIndex(e, 1)}
       >
-        <FontAwesomeIcon
-          icon={faChevronRight}
+        <Icon
+          icon={ICONS.RIGHT_ARROW}
           className="h-4 w-4 rounded-full bg-white p-2"
         />
       </button>
@@ -103,10 +100,15 @@ const HomePage = () => {
   }
 
   return (
-    <div className="my-6 grid h-full w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-      {places.map((place, index) => (
-        <PlaceContainer key={index} place={place} />
-      ))}
+    <div>
+      <div className="flex h-16"></div>
+      <div className="my-6 grid h-full w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        {/* filter */}
+
+        {places.map((place, index) => (
+          <PlaceContainer key={index} place={place} />
+        ))}
+      </div>
     </div>
   );
 };
