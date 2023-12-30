@@ -101,7 +101,9 @@ const HomePage = () => {
 
   return (
     <div>
-      <div className="flex h-16"></div>
+      <div className="mt-6 flex h-14 items-center rounded-xl border px-6 py-2 text-lg text-black">
+        <div>Filters:</div>
+      </div>
       <div className="my-6 grid h-full w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {/* filter */}
 

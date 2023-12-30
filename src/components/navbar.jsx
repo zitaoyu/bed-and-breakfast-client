@@ -9,9 +9,7 @@ const Logo = ({ className }) => {
   return (
     <Link to={"/"} className={`my-auto flex gap-2 text-primary ${className}`}>
       <Icon className="text-4xl" icon={ICONS.LOGO} />
-      <h1 className="hidden translate-y-2 text-xl font-bold lg:block">
-        bednbreakfast
-      </h1>
+      <h1 className="translate-y-2 text-xl font-bold">bednbreakfast</h1>
     </Link>
   );
 };
