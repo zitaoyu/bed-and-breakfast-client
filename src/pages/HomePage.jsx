@@ -3,14 +3,9 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { PacmanLoader } from "react-spinners";
 import ImageSlider from "../components/ImageSlider";
-import AFramesIcon from "../assets/a-frames.jpeg";
-import AmazingViewIcon from "../assets/amazing-view.jpeg";
-import BeachFrontIcon from "../assets/beach-front.jpeg";
-import CabinIcon from "../assets/cabin.jpeg";
-import DesignIcon from "../assets/design.jpeg";
-import TreeHouseIcon from "../assets//tree-house.jpeg";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { PLACE_TYPES } from "../util/place-types";
 
 const PlaceContainer = ({ place }) => {
   const id = place._id;
@@ -42,30 +37,22 @@ const FilterBar = ({
   setTypeFilter,
   priceRangeFilter,
   setPriceRangeFilter,
-  filterPlaces,
+  filterPlacesWithType,
+  filterPlacesWithPrice,
   resetFilter,
 }) => {
-  const filterOptions = [
-    { label: "A-frames", icon: AFramesIcon, value: "a-frames" },
-    { label: "Amazing views", icon: AmazingViewIcon, value: "amazing-views" },
-    { label: "Beachfront", icon: BeachFrontIcon, value: "beachfront" },
-    { label: "Cabins", icon: CabinIcon, value: "cabins" },
-    { label: "Design", icon: DesignIcon, value: "Design" },
-    { label: "Treehouses", icon: TreeHouseIcon, value: "treehouses" },
-  ];
-
   return (
     <div className="flex flex-col items-center justify-center gap-2 rounded-xl pt-4 lg:flex-row lg:gap-10">
       {/* Type Filter */}
       <div className="flex items-center gap-1 overflow-scroll sm:gap-4 md:gap-8">
         <span className="hidden font-semibold text-black xl:block">Types:</span>
-        {filterOptions.map((option, index) => (
+        {PLACE_TYPES.map((option, index) => (
           <button
             key={index}
             className={`${
               option.value === typeFilter ? "opacity-100" : "opacity-60"
             } group flex flex-col gap-1 text-xs text-black hover:opacity-100`}
-            onClick={() => setTypeFilter(option.value)}
+            onClick={() => filterPlacesWithType(option.value)}
           >
             <img src={option.icon} className="m-auto h-6 w-6" />
             <span>{option.label}</span>
@@ -130,7 +117,7 @@ const FilterBar = ({
             </button>
             <button
               className="rounded-lg border border-black p-2 font-semibold text-black hover:border-primary hover:bg-primary hover:text-white"
-              onClick={filterPlaces}
+              onClick={filterPlacesWithPrice}
             >
               Filter
             </button>
@@ -162,8 +149,22 @@ const HomePage = () => {
       });
   }, []);
 
-  function filterPlaces() {
-    let newFilteredPlaces = places.filter(
+  function filterPlacesWithType(type) {
+    setTypeFilter(type);
+    let newFilteredPlaces = places.filter((place) =>
+      place.types.includes(type),
+    );
+    newFilteredPlaces = newFilteredPlaces.filter(
+      (place) =>
+        place.price >= priceRangeFilter[0] &&
+        place.price <= priceRangeFilter[1],
+    );
+
+    setFilteredPlaces(newFilteredPlaces);
+  }
+
+  function filterPlacesWithPrice() {
+    let newFilteredPlaces = filteredPlaces.filter(
       (place) =>
         place.price >= priceRangeFilter[0] &&
         place.price <= priceRangeFilter[1],
@@ -193,7 +194,8 @@ const HomePage = () => {
         setTypeFilter={setTypeFilter}
         priceRangeFilter={priceRangeFilter}
         setPriceRangeFilter={setPriceRangeFilter}
-        filterPlaces={filterPlaces}
+        filterPlacesWithType={filterPlacesWithType}
+        filterPlacesWithPrice={filterPlacesWithPrice}
         resetFilter={resetFilter}
       />
       {filteredPlaces.length > 0 ? (

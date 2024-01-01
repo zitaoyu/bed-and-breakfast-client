@@ -4,6 +4,7 @@ import axios from "axios";
 import ALL_PERKS from "../util/perks";
 import { Icon } from "./Icon";
 import { ICONS } from "../util/icons";
+import { PLACE_TYPES } from "../util/place-types";
 
 const FormInput = ({
   title,
@@ -151,6 +152,7 @@ const NewPlaceForm = () => {
   const [address, setAddress] = useState("");
   const [addedPhotos, setAddedPhotos] = useState([]);
   const [description, setDescription] = useState("");
+  const [types, setTypes] = useState([]);
   const [perks, setPerks] = useState([]);
   const [extraInfo, setExtraInfo] = useState("");
   const [checkIn, setCheckIn] = useState("After 4:00 PM");
@@ -169,6 +171,7 @@ const NewPlaceForm = () => {
           setAddress(data.address);
           setAddedPhotos(data.photos);
           setDescription(data.description);
+          setTypes(data.types);
           setPerks(data.perks);
           setExtraInfo(data.extraInfo);
           setCheckIn(data.checkIn);
@@ -181,6 +184,17 @@ const NewPlaceForm = () => {
         });
     }
   }, []);
+
+  function handlePlaceTypeBoxChange(ev) {
+    const { name, checked } = ev.target;
+    setTypes((prevTypes) => {
+      if (checked) {
+        return [...prevTypes, name];
+      } else {
+        return prevTypes.filter((typeName) => typeName !== name);
+      }
+    });
+  }
 
   function handlePerksCheckBoxChange(ev) {
     const { name, checked } = ev.target;
@@ -200,6 +214,7 @@ const NewPlaceForm = () => {
       address,
       addedPhotos,
       description,
+      types,
       perks,
       extraInfo,
       checkIn,
@@ -267,6 +282,29 @@ const NewPlaceForm = () => {
         state={description}
         stateSetter={setDescription}
       />
+
+      {/* Place Types */}
+      <h2 className="text-2xl font-semibold text-black">Place Type:</h2>
+      <div className="grid grid-cols-1 gap-1 text-lg text-black sm:grid-cols-2 lg:grid-cols-3">
+        {PLACE_TYPES.map((type, index) => (
+          <label
+            key={index}
+            className={`flex cursor-pointer items-center gap-2 rounded-xl border p-4 accent-primary ${
+              types.includes(type.value) && "bg-slate"
+            }`}
+          >
+            <input
+              type="checkbox"
+              checked={types.includes(type.value)}
+              name={type.value}
+              className="mr-2"
+              onChange={(ev) => handlePlaceTypeBoxChange(ev)}
+            />
+            {type.icon && <img className="h-4 w-4" src={type.icon} />}
+            <span>{type.label}</span>
+          </label>
+        ))}
+      </div>
 
       {/* Perks */}
       <h2 className="text-2xl font-semibold text-black">Amenities:</h2>
