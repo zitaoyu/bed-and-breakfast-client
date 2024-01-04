@@ -6,6 +6,7 @@ import ImageSlider from "../components/ImageSlider";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { PLACE_TYPES } from "../util/place-types";
+import useScreenSize from "../hooks/useScreenSize";
 
 const PlaceContainer = ({ place }) => {
   const id = place._id;
@@ -129,12 +130,24 @@ const FilterBar = ({
 };
 
 const HomePage = () => {
+  const screenSize = useScreenSize();
+
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState("Loading...");
   const [typeFilter, setTypeFilter] = useState(null);
   const [priceRangeFilter, setPriceRangeFilter] = useState([0, 600]);
+  const [showPlaces, setShowPlaces] = useState(0);
+
+  const screenSizeMap = {
+    xs: 6,
+    sm: 6,
+    md: 9,
+    lg: 12,
+    xl: 15,
+    "2xl": 18,
+  };
 
   useEffect(() => {
     axios
@@ -142,6 +155,7 @@ const HomePage = () => {
       .then((response) => {
         setPlaces(response.data);
         setFilteredPlaces(response.data);
+        setShowPlaces(screenSizeMap[screenSize.size]);
         setLoading(false);
       })
       .catch(() => {
@@ -178,6 +192,10 @@ const HomePage = () => {
     setFilteredPlaces(places);
   }
 
+  function showMorePlaces() {
+    setShowPlaces((prev) => prev + screenSizeMap[screenSize.size]);
+  }
+
   if (loading) {
     return (
       <div className="m-auto flex flex-col gap-4 text-lg text-primary">
@@ -199,17 +217,22 @@ const HomePage = () => {
         resetFilter={resetFilter}
       />
       {filteredPlaces.length > 0 ? (
-        <div
-          className={`my-6 grid h-full w-full grid-cols-1 gap-6 
+        <div>
+          <div
+            className={`my-6 grid h-full w-full grid-cols-1 gap-6 
                     sm:grid-cols-2 
                     md:grid-cols-3 
                     lg:grid-cols-4 
                     xl:grid-cols-5 
                     2xl:grid-cols-6`}
-        >
-          {filteredPlaces.map((place, index) => (
-            <PlaceContainer key={index} place={place} />
-          ))}
+          >
+            {filteredPlaces.map((place, index) => {
+              if (index < showPlaces) {
+                return <PlaceContainer key={index} place={place} />;
+              }
+            })}
+          </div>
+          <button onClick={showMorePlaces}>Show More</button>
         </div>
       ) : (
         <div className="h-screen w-full">
