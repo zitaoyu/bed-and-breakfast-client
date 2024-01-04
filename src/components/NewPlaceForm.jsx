@@ -62,7 +62,6 @@ const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
     for (const file of files) {
       data.append("photos", file);
     }
-
     axios
       .post("/upload", data, {
         headers: { "Content-Type": "multipart/form-data" },
