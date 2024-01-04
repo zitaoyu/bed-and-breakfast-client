@@ -149,6 +149,28 @@ const HomePage = () => {
     "2xl": 18,
   };
 
+  function loadMorePlaces() {
+    setShowPlaces((prev) => prev + screenSizeMap[screenSize.size]);
+  }
+
+  useEffect(() => {
+    function handleScroll() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      if (windowHeight + scrollTop >= documentHeight - 200) {
+        loadMorePlaces();
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loadMorePlaces]);
+
   useEffect(() => {
     axios
       .get("/places")
@@ -192,10 +214,6 @@ const HomePage = () => {
     setFilteredPlaces(places);
   }
 
-  function showMorePlaces() {
-    setShowPlaces((prev) => prev + screenSizeMap[screenSize.size]);
-  }
-
   if (loading) {
     return (
       <div className="m-auto flex flex-col gap-4 text-lg text-primary">
@@ -217,22 +235,19 @@ const HomePage = () => {
         resetFilter={resetFilter}
       />
       {filteredPlaces.length > 0 ? (
-        <div>
-          <div
-            className={`my-6 grid h-full w-full grid-cols-1 gap-6 
+        <div
+          className={`my-6 grid h-full w-full grid-cols-1 gap-6 
                     sm:grid-cols-2 
                     md:grid-cols-3 
                     lg:grid-cols-4 
                     xl:grid-cols-5 
                     2xl:grid-cols-6`}
-          >
-            {filteredPlaces.map((place, index) => {
-              if (index < showPlaces) {
-                return <PlaceContainer key={index} place={place} />;
-              }
-            })}
-          </div>
-          <button onClick={showMorePlaces}>Show More</button>
+        >
+          {filteredPlaces.map((place, index) => {
+            if (index < showPlaces) {
+              return <PlaceContainer key={index} place={place} />;
+            }
+          })}
         </div>
       ) : (
         <div className="h-screen w-full">
