@@ -18,7 +18,7 @@ const ImageSlider = ({ photos }) => {
           loadImg.onload = () =>
             setTimeout(() => {
               resolve(url);
-            }, 2000);
+            }, 1000);
 
           loadImg.onerror = (err) => reject(err);
         });
@@ -42,32 +42,34 @@ const ImageSlider = ({ photos }) => {
 
   return (
     <div className="group relative h-full w-full">
-      {loading ? (
-        <Skeleton className="aspect-square h-full w-full rounded-2xl" />
-      ) : (
-        <img
-          key={photoIndex}
-          className={"aspect-square rounded-2xl object-cover " + imageAnimation}
-          src={photos[photoIndex]}
-        />
-      )}
+      <div className="aspect-square h-full w-full overflow-hidden rounded-2xl">
+        {loading ? (
+          <Skeleton className="h-full w-full" />
+        ) : (
+          <img
+            key={photoIndex}
+            className={"h-full w-full object-cover " + imageAnimation}
+            src={photos[photoIndex]}
+          />
+        )}
+      </div>
 
       <button
-        className="absolute top-1/2 ml-1 hidden -translate-y-1/2 opacity-70 hover:opacity-100 group-hover:block"
+        className="absolute top-1/2 ml-1 block -translate-y-1/2 opacity-70 hover:opacity-100 group-hover:block sm:hidden"
         onClick={(e) => updatePhotoIndex(e, -1)}
       >
         <Icon
           icon={ICONS.LEFT_ARROW}
-          className="h-4 w-4 rounded-full bg-white p-2"
+          className="h-6 w-6 rounded-full bg-white p-2 sm:h-4 sm:w-4"
         />
       </button>
       <button
-        className="absolute right-0 top-1/2 mr-1 hidden -translate-y-1/2 opacity-70 hover:opacity-100 group-hover:block"
+        className="absolute right-0 top-1/2 mr-1 block -translate-y-1/2 opacity-70 hover:opacity-100 group-hover:block sm:hidden"
         onClick={(e) => updatePhotoIndex(e, 1)}
       >
         <Icon
           icon={ICONS.RIGHT_ARROW}
-          className="h-4 w-4 rounded-full bg-white p-2"
+          className="h-6 w-6 rounded-full bg-white p-2 sm:h-4 sm:w-4"
         />
       </button>
     </div>

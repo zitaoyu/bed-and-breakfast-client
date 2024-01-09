@@ -29,7 +29,7 @@ const useScreenSize = () => {
       setScreenSize({
         width: newWidth,
         height: window.innerHeight,
-        category: getScreenSizeCategory(newWidth), // Update category on resize
+        size: getScreenSizeCategory(newWidth),
       });
     };
 
