@@ -154,21 +154,27 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    function handleScroll() {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    if (showPlaces < places.length) {
+      function handleScroll() {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-      if (windowHeight + scrollTop >= documentHeight - 200) {
-        loadMorePlaces();
+        if (
+          windowHeight + scrollTop >=
+          documentHeight -
+            (screenSize.width < 500 ? screenSize.height / 2 : 200)
+        ) {
+          loadMorePlaces();
+        }
       }
+
+      window.addEventListener("scroll", handleScroll);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
     }
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, [loadMorePlaces]);
 
   useEffect(() => {
