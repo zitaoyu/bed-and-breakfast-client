@@ -260,7 +260,7 @@ const HomePage = () => {
               }
             })}
           </div>
-          <button onClick={showMorePlaces}>Show More</button>
+          <button onClick={showMorePlaces}>Show More</button> 
         </div>
       ) : (
         <div className="h-screen w-full">
