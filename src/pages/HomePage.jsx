@@ -149,6 +149,34 @@ const HomePage = () => {
     "2xl": 18,
   };
 
+  function loadMorePlaces() {
+    setShowPlaces((prev) => prev + screenSizeMap[screenSize.size]);
+  }
+
+  useEffect(() => {
+    if (showPlaces < places.length) {
+      function handleScroll() {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+        if (
+          windowHeight + scrollTop >=
+          documentHeight -
+            (screenSize.width < 500 ? screenSize.height / 2 : 200)
+        ) {
+          loadMorePlaces();
+        }
+      }
+
+      window.addEventListener("scroll", handleScroll);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [loadMorePlaces]);
+
   useEffect(() => {
     axios
       .get("/places")
