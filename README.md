@@ -7,7 +7,7 @@ MERN stack online booking site inspired by Airbnb.
 Clone the project
 
 ```bash
-  git clone https://github.com/zitaoyu/bed-and-breakfast-client
+  git clone https://github.com/zitaoyu/bednbreakfast
 ```
 
 Go to the project directory
